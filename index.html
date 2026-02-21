@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-key="site_title">منظّم مهامي</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1 class="logo" data-key="home_header">منظّم مهامي</h1>
+
+  <nav>
+    <a href="index.html" data-key="nav_home">الرئيسية</a>
+    <a href="tasks.html" data-key="nav_tasks">المهام</a>
+    <a href="appointments.html" data-key="nav_appointments">المواعيد</a>
+    <a href="about.html" data-key="nav_about">عنّا</a>
+    <a href="profile.html" data-key="nav_profile">حسابي</a>
+    <a href="login.html" id="loginLink" data-key="login">تسجيل الدخول</a>
+    <button id="logoutBtn" onclick="logout()" data-key="logout" style="display:none;">
+      تسجيل خروج
+    </button>
+    <button class="lang-btn" onclick="toggleLang()">AR / EN</button>
+<button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
+  </nav>
+</header>
+
+<section class="hero-section">
+  <h1 class="site-title" data-key="home_header">منظّم مهامي</h1>
+  <img src="note.png" class="hero-img" alt="منظم المهام">
+
+  <h2 class="welcome-text" data-key="welcome">
+    مرحبًا بك في منظّم مهامك
+  </h2>
+
+  <div id="quoteBox" style="margin:20px 0; font-weight:bold;"></div>
+  <div id="statsBox" style="margin:15px 0;">
+   <span id="progressText" data-key="progress"></span>
+  </div>
+
+  <p class="desc-text" data-key="desc">
+    نظّم مهامك ومواعيدك بسهولة وتابع إنجازاتك يومًا بيوم.
+  </p>
+</section>
+
+<script src="script.js"></script>
+<script src="auth.js"></script>
+<script>
+  // إظهار/إخفاء أزرار الدخول/الخروج
+  const loggedIn = localStorage.getItem("loggedIn") === "true";
+  const loginLink = document.getElementById("loginLink");
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (loggedIn) {
+    if (loginLink) loginLink.style.display = "none";
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+  } else {
+    if (loginLink) loginLink.style.display = "inline-block";
+    if (logoutBtn) logoutBtn.style.display = "none";
+  }
+
+  // تحديث نسبة الإنجاز لو حاب تستخدمها
+  updateProgress();
+</script>
+
+</body>
+</html>

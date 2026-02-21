@@ -1,0 +1,410 @@
+:root {
+  --beige: #f5efe6;
+  --light-beige: #fbf8f3;
+  --brown: #7a5c3e;
+  --dark-brown: #5a4028;
+  --green: #cfe8d5;
+  --red: #f4c7c3;
+}
+
+/* reset بسيط */
+* {
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--beige);
+  color: var(--dark-brown);
+  direction: rtl;
+}
+
+/* HEADER & NAV */
+
+header {
+  position: sticky;
+  top: 0;
+  background: var(--brown);
+  color: white;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin: 0 4px;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+.lang-btn {
+  background-color: #e8dccb;
+  color: #6b4f2d;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.lang-btn:hover {
+  background-color: #dccbb3;
+}
+
+/* CONTAINER & CARD */
+
+.container {
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 900px;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin: 6px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: var(--brown);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* TASKS */
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  background: var(--light-beige);
+}
+
+.task.done {
+  background: var(--green);
+}
+
+.overdue {
+  background-color: #ffe5e5;
+  border: 2px solid red;
+  color: #a00000;
+}
+
+.task-actions button {
+  margin-inline-start: 5px;
+}
+
+/* CALENDAR */
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.day {
+  background: var(--light-beige);
+  padding: 10px;
+  border-radius: 8px;
+  min-height: 80px;
+  text-align: center;
+}
+
+.day strong {
+  color: #6b4f3b;
+}
+
+.expired {
+  background-color: #ffe5e5;
+  border: 2px solid red;
+  color: #a00000;
+}
+
+.done {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+/* HERO / HOME */
+
+.hero-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.site-title {
+  font-size: 48px;
+  margin-bottom: 25px;
+  color: #5a3e2b;
+}
+
+.hero-img {
+  width: 280px;
+  margin-bottom: 25px;
+}
+
+.welcome-text {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.desc-text {
+  font-size: 16px;
+  color: #444;
+}
+
+/* LOGIN / SIGNUP CENTERING */
+
+.container.center {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+/* SIGNUP GRID */
+
+.signup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.signup-grid input[type="password"] {
+  grid-column: span 2;
+}
+
+/* PROFILE */
+
+.profile-card {
+  max-width: 500px;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  header nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .calendar {
+    font-size: 12px;
+  }
+}
+/* ===== DARK MODE ===== */
+
+.dark {
+  --beige: #1e1e1e;
+  --light-beige: #2a2a2a;
+  --brown: #d7c3a5;
+  --dark-brown: #f5efe6;
+  --green: #3d6f50;
+  --red: #8b3a3a;
+  background: #1e1e1e;
+  color: #f5efe6;
+}
+
+.dark header {
+  background: #3a2a1a;
+}
+
+.dark nav a {
+  color: #f5efe6;
+}
+
+.dark .card {
+  background: #2a2a2a;
+  color: #f5efe6;
+}
+
+.dark input,
+.dark textarea {
+  background: #333;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+.dark .task {
+  background: #333;
+}
+
+.dark .task.done {
+  background: #2f4f3f;
+}
+
+.dark .overdue {
+  background: #5a2a2a;
+  border-color: #ff4444;
+}
+
+.dark .calendar .day {
+  background: #2a2a2a;
+}
+
+.dark .lang-btn,
+.dark .dark-btn {
+  background: #444;
+  color: #fff;
+}
+.dark-btn {
+  background: #e8dccb;
+  color: #6b4f2d;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dark-btn:hover {
+  opacity: 0.9;
+}
+/* ===== DARK MODE (SOFT & ELEGANT) ===== */
+
+.dark {
+  --beige: #181818;          /* خلفية أساسية داكنة وناعمة */
+  --light-beige: #222;       /* كروت وخلفيات ثانوية */
+  --brown: #c8b79a;          /* بيج ناعم بدل البني */
+  --dark-brown: #e8e0d4;     /* نص بيج فاتح بدل الأبيض */
+  --green: #3d6f50;
+  --red: #a84a4a;
+  background: #181818;
+  color: #e8e0d4;            /* نص ناعم بدل الأبيض */
+}
+
+/* الهيدر */
+.dark header {
+  background: #202020;       /* غامق ناعم – بدون صراخ */
+  color: #e8e0d4;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+/* الروابط */
+.dark nav a {
+  color: #e8e0d4;
+}
+
+/* الكروت */
+.dark .card {
+  background: #222;
+  color: #e8e0d4;
+  border: 1px solid #2f2f2f;
+}
+
+/* الحقول */
+.dark input,
+.dark textarea {
+  background: #2a2a2a;
+  color: #e8e0d4;
+  border: 1px solid #444;
+}
+
+/* المهام */
+.dark .task {
+  background: #242424;
+  color: #e8e0d4;
+}
+
+.dark .task.done {
+  background: #2f4f3f;
+}
+
+.dark .overdue {
+  background: #5a2a2a;
+  border-color: #ff4444;
+}
+
+/* التقويم */
+.dark .calendar .day {
+  background: #222;
+  color: #e8e0d4;
+}
+
+/* أزرار اللغة والوضع الليلي */
+.dark .lang-btn,
+.dark .dark-btn {
+  background: #333;
+  color: #e8e0d4;
+  border: 1px solid #555;
+}
+
+/* زر الوضع الليلي */
+.dark-btn {
+  background: #d8c7a8;
+  color: #4a3b2a;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dark .dark-btn {
+  background: #3a3a3a;
+  color: #e8e0d4;
+}
+.dark .site-title {
+  color: #d8d2c8;
+}
+.dark h1,
+.dark h2,
+.dark h3,
+.dark p,
+.dark span {
+  color: #d8d2c8;
+}

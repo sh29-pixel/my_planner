@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-key="tasks_title">المهام</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1 data-key="tasks_title">المهام</h1>
+
+  <nav>
+    <a href="index.html" data-key="nav_home">الرئيسية</a>
+    <a href="appointments.html" data-key="nav_appointments">المواعيد</a>
+    <a href="about.html" data-key="nav_about">عنّا</a>
+    <a href="profile.html" data-key="nav_profile">حسابي</a>
+    <button onclick="logout()" data-key="logout">تسجيل خروج</button>
+    <button class="lang-btn" onclick="toggleLang()">AR / EN</button>
+<button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
+  </nav>
+</header>
+
+<div class="container">
+
+  <div class="card">
+    <input
+      type="text"
+      id="taskText"
+      data-key-placeholder="task_placeholder"
+      placeholder="اكتب المهمة"
+    >
+    <input type="datetime-local" id="taskTime">
+    <button onclick="addTask()" data-key="add">إضافة</button>
+  </div>
+
+  <h3 data-key="tasks_list">المهام</h3>
+  <div id="taskList"></div>
+
+</div>
+
+<script>
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+if ("Notification" in window && Notification.permission === "default") {
+  Notification.requestPermission();
+}
+
+function addTask() {
+  const text = taskText.value.trim();
+  const time = taskTime.value;
+
+  if (!text || !time) {
+    alert("اكتب المهمة وحدد الوقت");
+    return;
+  }
+
+  tasks.push({
+    id: Date.now(),
+    text,
+    time,
+    done: false
+  });
+
+  saveTasks();
+  renderTasks();
+
+  if (Notification.permission === "granted") {
+    new Notification("📌 مهمة جديدة", { body: text });
+  }
+
+  taskText.value = "";
+  taskTime.value = "";
+}
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  saveTasks();
+  renderTasks();
+}
+
+function markDone(id) {
+  tasks = tasks.map(t =>
+    t.id === id ? { ...t, done: true } : t
+  );
+  saveTasks();
+  renderTasks();
+}
+
+function renderTasks() {
+  const list = document.getElementById("taskList");
+  list.innerHTML = "";
+
+  tasks.sort((a, b) => new Date(a.time) - new Date(b.time));
+
+  const grouped = {};
+
+  tasks.forEach(task => {
+    const [date, time] = task.time.split("T");
+    const hour = time.slice(0, 5);
+
+    if (!grouped[date]) grouped[date] = {};
+    if (!grouped[date][hour]) grouped[date][hour] = [];
+
+    grouped[date][hour].push(task);
+  });
+
+  Object.keys(grouped).forEach(date => {
+    const dateTitle = document.createElement("h3");
+    dateTitle.innerText = `📅 ${date}`;
+    list.appendChild(dateTitle);
+
+    Object.keys(grouped[date]).forEach(hour => {
+      const hourTitle = document.createElement("h4");
+      hourTitle.innerText = `⏰ ${hour}`;
+      list.appendChild(hourTitle);
+
+      grouped[date][hour].forEach(task => {
+        const now = new Date();
+        const taskDate = new Date(task.time);
+        const isOverdue = !task.done && taskDate.getTime() < Date.now();
+
+        const div = document.createElement("div");
+        div.className = "task";
+        if (task.done) {
+          div.classList.add("done");
+        } else if (isOverdue) {
+          div.classList.add("overdue");
+        }
+
+        div.innerHTML = `
+          <span>${task.text}</span>
+          <div class="task-actions">
+            <button onclick="markDone(${task.id})">✔</button>
+            <button onclick="deleteTask(${task.id})">🗑</button>
+          </div>
+        `;
+        list.appendChild(div);
+      });
+    });
+  });
+}
+
+renderTasks();
+</script>
+
+<script src="script.js"></script>
+<script src="auth.js"></script>
+<script>
+  checkAuth();
+</script>
+
+</body>
+</html>

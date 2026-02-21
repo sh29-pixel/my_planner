@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-key="about_page_title">عن التطبيق</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1 data-key="about_header">عن التطبيق</h1>
+
+  <nav>
+    <a href="index.html" data-key="nav_home">الرئيسية</a>
+    <a href="tasks.html" data-key="nav_tasks">المهام</a>
+    <a href="appointments.html" data-key="nav_appointments">المواعيد</a>
+    <a href="profile.html" data-key="nav_profile">حسابي</a>
+    <button onclick="logout()" data-key="logout">تسجيل خروج</button>
+    <button class="lang-btn" onclick="toggleLang()">AR / EN</button>
+<button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
+  </nav>
+</header>
+
+<main class="container">
+  <div class="card">
+    <h2 data-key="aboutTitle">ما هو هذا التطبيق؟</h2>
+    <p data-key="aboutDesc">
+      هذا التطبيق يساعدك على تنظيم مهامك اليومية ومواعيدك الشهرية بطريقة بسيطة وواضحة.
+    </p>
+
+    <h3 data-key="featuresTitle">ماذا يقدّم لك؟</h3>
+    <ul data-key="featuresList">
+      <li>📌 إضافة مهام مع وقت وتاريخ</li>
+      <li>🔔 إشعارات للتنبيه بالمهام</li>
+      <li>📅 تقويم شهري للمواعيد</li>
+      <li>💾 حفظ تلقائي للبيانات</li>
+      <li>🌍 دعم اللغة العربية والإنجليزية</li>
+    </ul>
+
+    <h3 data-key="privacyTitle">الخصوصية</h3>
+    <p data-key="privacyDesc">
+      جميع بياناتك محفوظة على جهازك فقط، ولا يتم إرسال أي معلومات إلى الإنترنت.
+    </p>
+
+    <h3 data-key="helpTitle">نصائح للاستخدام</h3>
+    <ul data-key="helpList">
+      <li>احرص على تفعيل الإشعارات عند الطلب</li>
+      <li>راجع مهامك يوميًا</li>
+      <li>حدّث مواعيدك أولًا بأول</li>
+    </ul>
+  </div>
+</main>
+
+<script src="script.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>

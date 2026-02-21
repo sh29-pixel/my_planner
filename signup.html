@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء حساب</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1 data-key="site_title">منظّم مهامي</h1>
+  <nav>
+    <a href="index.html" data-key="nav_home">الرئيسية</a>
+    <button class="lang-btn" onclick="toggleLang()">AR / EN</button>
+<button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
+  </nav>
+</header>
+
+<main class="container center">
+  <div class="card center-card">
+    <h2>إنشاء حساب</h2>
+
+    <div class="signup-grid">
+      <input type="text" id="signupName" placeholder="الاسم الكامل">
+      <input type="text" id="signupUsername" placeholder="اسم المستخدم">
+      <input type="email" id="signupEmail" placeholder="البريد الإلكتروني">
+      <input type="password" id="signupPassword" placeholder="كلمة المرور">
+    </div>
+
+    <span id="emailError" style="color:red;font-size:13px;"></span>
+
+    <button onclick="register()">إنشاء حساب</button>
+
+    <p>
+      عندك حساب؟
+      <a href="login.html">تسجيل الدخول</a>
+    </p>
+  </div>
+</main>
+
+<script src="script.js"></script>
+<script src="auth.js"></script>
+
+</body>
+</html>

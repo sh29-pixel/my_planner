@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-key="appointments">المواعيد</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+  <h1 data-key="appointments">المواعيد</h1>
+
+  <nav>
+    <a href="index.html" data-key="nav_home">الرئيسية</a>
+    <a href="tasks.html" data-key="nav_tasks">المهام</a>
+    <a href="about.html" data-key="nav_about">عنّا</a>
+    <a href="profile.html" data-key="nav_profile">حسابي</a>
+    <button onclick="logout()" data-key="logout">تسجيل خروج</button>
+    <button class="lang-btn" onclick="toggleLang()">AR / EN</button>
+<button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
+  </nav>
+</header>
+
+<main class="container">
+
+  <div class="calendar-header" style="display:flex;justify-content:center;align-items:center;gap:10px;margin-bottom:15px;">
+    <button onclick="changeMonth(-1)">◀</button>
+    <h2 id="monthYear"></h2>
+    <button onclick="changeMonth(1)">▶</button>
+  </div>
+
+  <div class="calendar" id="calendar"></div>
+
+  <div class="card">
+    <h3 data-key="add_appointment">إضافة موعد</h3>
+    <input
+      type="text"
+      id="appTitle"
+      placeholder="اسم الموعد"
+      data-key-placeholder="event_name"
+    >
+    <input type="date" id="appDate">
+    <input type="time" id="appTime">
+    <button onclick="addAppointment()" data-key="add">إضافة</button>
+  </div>
+
+</main>
+
+<script>
+let currentDate = new Date();
+let appointments = JSON.parse(localStorage.getItem("appointments")) || [];
+
+function saveAppointments() {
+  localStorage.setItem("appointments", JSON.stringify(appointments));
+}
+
+function renderCalendar() {
+  const calendar = document.getElementById("calendar");
+  calendar.innerHTML = "";
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  const monthNames = {
+    ar: ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"],
+    en: ["January","February","March","April","May","June","July","August","September","October","November","December"]
+  };
+
+  const lang = localStorage.getItem("lang") || "ar";
+  document.getElementById("monthYear").innerText =
+    `${monthNames[lang][month]} ${year}`;
+
+  const firstDay = (new Date(year, month, 1).getDay() + 6) % 7;
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement("div");
+    calendar.appendChild(empty);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const cell = document.createElement("div");
+    cell.className = "day";
+
+    const dateStr =
+      `${year}-${String(month + 1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+
+    const title = document.createElement("strong");
+    title.innerText = day;
+    cell.appendChild(title);
+
+    appointments
+      .filter(a => a.date === dateStr)
+      .forEach((a) => {
+        const p = document.createElement("p");
+        p.innerText = a.title + (a.time ? " - " + a.time : "");
+
+        const now = new Date();
+        const timeValue = a.time ? a.time : "23:59";
+        const fullDateTime = new Date(a.date + "T" + timeValue);
+
+        if (fullDateTime.getTime() < Date.now() && !a.done) {
+          p.classList.add("expired");
+        }
+
+        if (a.done) p.classList.add("done");
+
+        const done = document.createElement("span");
+        done.innerText = " ✔";
+        done.style.cursor = "pointer";
+        done.onclick = () => {
+          a.done = !a.done;
+          saveAppointments();
+          renderCalendar();
+        };
+
+        const del = document.createElement("span");
+        del.innerText = " 🗑";
+        del.style.cursor = "pointer";
+        del.onclick = () => {
+          appointments = appointments.filter(item => item.id !== a.id);
+          saveAppointments();
+          renderCalendar();
+        };
+
+        p.append(done, del);
+        cell.appendChild(p);
+      });
+
+    calendar.appendChild(cell);
+  }
+}
+
+function changeMonth(step) {
+  currentDate.setMonth(currentDate.getMonth() + step);
+  renderCalendar();
+}
+
+function addAppointment() {
+  if (!appTitle.value || !appDate.value) return;
+
+  appointments.push({
+    id: Date.now(),
+    title: appTitle.value,
+    date: appDate.value,
+    time: appTime.value || "",
+    done: false
+  });
+
+  saveAppointments();
+  renderCalendar();
+
+  appTitle.value = "";
+  appDate.value = "";
+  appTime.value = "";
+}
+
+renderCalendar();
+
+setInterval(() => {
+  renderCalendar();
+}, 60000);
+</script>
+
+<script src="script.js"></script>
+<script src="auth.js"></script>
+<script>
+  checkAuth();
+</script>
+
+</body>
+</html>

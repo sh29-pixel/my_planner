@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1 data-key="site_title">منظّم مهامي</h1>
+  <nav>
+    <a href="index.html" data-key="nav_home">الرئيسية</a>
+    <button class="lang-btn" onclick="toggleLang()">AR / EN</button>
+<button class="dark-btn" onclick="toggleDarkMode()">🌙</button>
+  </nav>
+</header>
+
+<main class="container center">
+  <div class="card center-card">
+    <h2 data-key="login">تسجيل الدخول</h2>
+
+    <div id="savedAccount" style="display:none; margin-bottom:15px;">
+      <p>يوجد حساب محفوظ على هذا الجهاز:</p>
+      <button onclick="quickLogin()" id="savedUserBtn"></button>
+    </div>
+
+    <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+    <input type="password" id="loginPassword" placeholder="كلمة المرور">
+
+    <button onclick="login()" data-key="login">تسجيل الدخول</button>
+
+    <p>
+      ليس لديك حساب؟
+      <a href="signup.html">إنشاء حساب</a>
+    </p>
+  </div>
+</main>
+
+<script src="script.js"></script>
+<script src="auth.js"></script>
+<script>
+const savedUser = JSON.parse(localStorage.getItem("user"));
+
+if (savedUser && savedUser.email) {
+  document.getElementById("savedAccount").style.display = "block";
+  document.getElementById("savedUserBtn").textContent =
+    (savedUser.name || "مستخدم") + " (" + savedUser.email + ")";
+}
+
+function quickLogin() {
+  localStorage.setItem("loggedIn", "true");
+  window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
